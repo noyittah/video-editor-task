@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
-import { HeaderComponent } from './components/header/header.component';
 import { AppComponent } from './app.component';
-
-
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -10,8 +8,11 @@ import { AppComponent } from './app.component';
     HeaderComponent,
   ],
   imports: [
-  ],
 
+  ],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
