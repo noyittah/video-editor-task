@@ -1,0 +1,24 @@
+<div class="track-container">
+    <div class="track-header">
+        <div class="zoom-container">
+            <img src="assets/images/zoom_in.png" alt="Icon">
+            <img src="assets/images/zoom_out.png" alt="Icon">
+        </div>
+        <button mat-button class="play-btn">
+            <span class="btn-txt"> Play </span> 
+        </button> 
+    </div>
+    <div class="ruler">
+        <div class="ruler-marker" *ngFor="let marker of rulerMarkers">
+            {{ marker }}
+        </div>
+    </div>
+    <div class="scene-container">
+        <div class="scene" *ngFor="let scene of scenes" [style.width]="scene.lengthOnTimeline + 'px'" [style.left]="scene.positionOnTimeline + 'px'">
+            {{ scene.name }}
+        </div>
+        <div *ngIf="!scenes.length">
+            drop scenes here!
+        </div>
+    </div>
+</div>

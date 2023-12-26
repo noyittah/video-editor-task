@@ -1,0 +1,59 @@
+.track-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .track-header {
+        background-color: white;
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 10px;
+
+        .zoom-container {
+            display: flex;
+            align-items: center;
+
+            img {
+                cursor: pointer;
+                height: 25px;
+                width: 25px;
+            }
+        }
+
+        .play-btn {
+            background-color: black;
+            color: white;
+            border: 1px solid black;
+            height: 25px;
+            width: 10%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    }
+
+    .ruler {
+        background-color: black;
+        color: white;
+        display: flex;
+        padding: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+
+        .ruler-marker {
+            flex: 1;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    }
+
+    .scene-container {
+        background-color: rgb(238, 189, 28);
+        flex-grow: 1;
+        overflow: auto;
+        padding: 40px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+}
