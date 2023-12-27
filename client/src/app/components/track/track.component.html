@@ -4,9 +4,7 @@
             <img src="assets/images/zoom_in.png" alt="Icon">
             <img src="assets/images/zoom_out.png" alt="Icon">
         </div>
-        <button mat-button class="play-btn">
-            <span class="btn-txt" (click)="mergeScenes()"> Play </span> 
-        </button> 
+            <button class="play-btn" (click)="playMergedVideo()">Play</button>
     </div>
     <div class="ruler">
         <div class="ruler-marker" *ngFor="let marker of rulerMarkers">

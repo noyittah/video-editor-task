@@ -11,9 +11,9 @@
     </div>
     <div class="video-preview">
         <span class="title"> Preview </span>
-        <video class="video" controls>
+        <video id="videoPlayer" class="video" controls>
             <source [src]="selectedScene$.value?.url" type="video/mp4">
             Your browser does not support the video tag.
-        </video>
+          </video>
     </div>
 </div>
