@@ -5,7 +5,7 @@
             <img src="assets/images/zoom_out.png" alt="Icon">
         </div>
         <button mat-button class="play-btn">
-            <span class="btn-txt"> Play </span> 
+            <span class="btn-txt" (click)="mergeScenes()"> Play </span> 
         </button> 
     </div>
     <div class="ruler">
@@ -13,12 +13,12 @@
             {{ marker }}
         </div>
     </div>
-    <div class="scene-container">
-        <div class="scene" *ngFor="let scene of scenes" [style.width]="scene.lengthOnTimeline + 'px'" [style.left]="scene.positionOnTimeline + 'px'">
-            {{ scene.name }}
+    <div *ngIf="draggedScene" class="scene-container" cdkDropList (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let scene of scenes" class="scene" cdkDrag [style.width]="calculateWidth(scene)">
+            {{ scene?.name }}
         </div>
-        <div *ngIf="!scenes.length">
-            drop scenes here!
-        </div>
+    </div>
+    <div *ngIf="!draggedScene" class="scene-container">
+        Drop scenes here!
     </div>
 </div>

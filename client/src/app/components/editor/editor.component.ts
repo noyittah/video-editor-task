@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { SCENES } from '../../constants';
+import { SCENES, TOTAL_DURATION } from '../../constants';
 import { BehaviorSubject } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { SceneService } from '../../services/scene.service';
 
 @Component({
   selector: 'app-editor',
@@ -8,12 +10,14 @@ import { BehaviorSubject } from 'rxjs';
   styleUrl: './editor.component.css'
 })
 export class EditorComponent {
+  draggedScene: any;
 
-  constructor() {
+  constructor(
+    private sceneService: SceneService) {
     this.selectedScene.next(this.scenes[0]);
   }
+
   scenes: any[] = SCENES;
-  // isPlay: boolean = false;
   private selectedScene: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   get selectedScene$(): BehaviorSubject<any> {
@@ -56,5 +60,18 @@ export class EditorComponent {
         videoElement.pause();
       }
     }
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    if (this.draggedScene) {
+      this.scenes.push(this.draggedScene);
+      this.sceneService.setDraggedScene(null);
+    } else {
+      moveItemInArray(this.scenes, event.previousIndex, event.currentIndex);
+    }
+  }
+
+  dragStart(scene: any): void { 
+    this.sceneService.setDraggedScene(scene);
   }
 }

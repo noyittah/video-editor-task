@@ -1,10 +1,10 @@
 <div class="editor-container">
-    <div class="scenes-list">
+    <div class="scenes-list" cdkDropList (cdkDropListDropped)="drop($event)">
         <span class="title"> All Scenes </span>
-        <div class="scene" *ngFor="let scene of scenes" (click)="onPlay(scene)">
+        <div class="scene" *ngFor="let scene of scenes" (click)="onPlay(scene)" cdkDrag (cdkDragStarted)="dragStart(scene)">
             <div class="scene-container">
               <span class="scene-name">{{ scene.name }}</span>
-              <span class="scene-duration">{{ scene.duration }}</span>
+              <span class="scene-duration">Duration: {{ scene.duration }}s</span>
             </div>
             <img [src]="scene.isPlay ? 'assets/images/pause.png' : 'assets/images/play.png'" alt="Icon">
           </div>

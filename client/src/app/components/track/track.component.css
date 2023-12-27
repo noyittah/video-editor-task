@@ -50,10 +50,20 @@
 
     .scene-container {
         background-color: rgb(238, 189, 28);
+        display: flex;
         flex-grow: 1;
         overflow: auto;
-        padding: 40px;
+        padding: 40px 5px;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
+        gap: 3px;
+
+        .scene {
+            background-color: rgb(193, 183, 183);
+            height: 40px;
+            border-radius: 3px;
+            font-weight: bold;
+            text-align: center;
+        }
     }
 }
