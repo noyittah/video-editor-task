@@ -15,6 +15,7 @@ export class TrackComponent implements OnInit {
   draggedScene: any;
   totalScenesDuration: number = 0;
   shouldPlayMergedVideo: boolean = false;
+  zoomIndex: number = 1;
 
   constructor(
     private sceneService: SceneService,
@@ -44,59 +45,44 @@ export class TrackComponent implements OnInit {
     return percent + '%';
   }
 
+  onClickZoomIn(): void {
+    if (this.zoomIndex < 3) {
+      this.zoomIndex += 0.1;
+    }
+  }
+
+  onClickZoomOut(): void {
+    if (this.zoomIndex > 0.2) {
+      this.zoomIndex -= 0.1;
+    }
+  }
+
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.scenes, event.previousIndex, event.currentIndex);
   }
 
-  async mergeScenes(): Promise<void> {
+  async onClickPlayBtn(): Promise<void> {
     const inputFiles = this.scenes.map((scene) => scene.url).filter((url) => !!url);
+
+    // const tempOutputFileName = 'temp_merged_video.mp4';
+
+    try {
+      await this.videoEditorService.mergeVideos(inputFiles);
+
+      // await this.videoEditorService.mergeVideos(inputFiles);
+      this.shouldPlayMergedVideo = true;
+
+      // // Save the merged video Blob to local storage
+      // const mergedVideoBlob = await this.videoEditorService.getVideoBlob(`assets/videos/${tempOutputFileName}`);
+      // localStorage.setItem('mergedVideoBlob', JSON.stringify(mergedVideoBlob));
+    } catch (error) {
+      console.error('Error concatenating videos:', error);
+    }
 
     if (inputFiles.length === 0) {
       console.error('No valid video files found.');
       return;
     }
-
-    const tempOutputFileName = 'temp_merged_video.mp4';
-
-    try {
-      console.log('Before concatenation. Input files:', inputFiles, 'Output file:', tempOutputFileName);
-      await this.videoEditorService.mergeVideos(inputFiles, tempOutputFileName);
-      console.log('After concatenation. Video merged successfully.');
-
-      // Set the flag to indicate that the video should be played
-      this.shouldPlayMergedVideo = true;
-
-      // Save the merged video Blob to local storage
-      const mergedVideoBlob = await this.videoEditorService.getVideoBlob(`assets/videos/${tempOutputFileName}`);
-      localStorage.setItem('mergedVideoBlob', JSON.stringify(mergedVideoBlob));
-    } catch (error) {
-      console.error('Error concatenating videos:', error);
-    }
-  }
-
-  playMergedVideo(): void {
-    const mergedVideoBlob = localStorage.getItem('mergedVideoBlob');
-  
-    if (mergedVideoBlob) {
-      const blob = new Blob([JSON.parse(mergedVideoBlob)], { type: 'video/mp4' });  
-      const videoPlayer = document.getElementById('videoPlayer') as HTMLMediaElement;
-      videoPlayer.src = URL.createObjectURL(blob);
-  
-      videoPlayer.load();
-  
-      const playButton = document.getElementById('playButton');
-      
-      if (playButton) {
-        playButton.addEventListener('click', () => {
-          videoPlayer.play();
-        });
-      }
-    }
-  }
-
-  ngOnDestroy(): void {
-    const videoPlayer = document.getElementById('videoPlayer') as HTMLMediaElement;
-    videoPlayer.src = '';
-    URL.revokeObjectURL(videoPlayer.src);
   }
 }
+

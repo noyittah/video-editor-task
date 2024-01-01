@@ -1,12 +1,12 @@
 <div class="track-container">
     <div class="track-header">
         <div class="zoom-container">
-            <img src="assets/images/zoom_in.png" alt="Icon">
-            <img src="assets/images/zoom_out.png" alt="Icon">
+            <img src="assets/images/zoom_in.png" (click)="onClickZoomIn()" alt="Icon">
+            <img src="assets/images/zoom_out.png" (click)="onClickZoomOut()" alt="Icon">
         </div>
-            <button class="play-btn" (click)="playMergedVideo()">Play</button>
+            <button class="play-btn" (click)="onClickPlayBtn()">Play</button>
     </div>
-    <div class="ruler">
+    <div class="ruler" [style.transform]="'scaleX(' + zoomIndex + ')'">
         <div class="ruler-marker" *ngFor="let marker of rulerMarkers">
             {{ marker }}
         </div>
@@ -20,3 +20,4 @@
         Drop scenes here!
     </div>
 </div>
+
